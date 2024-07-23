@@ -2,6 +2,8 @@ use std::ops::{Add, Div, Mul, Neg, Sub};
 use std::fs::File;
 use std::io::Write;
 
+use crate::interval::Interval;
+
 
 #[derive(Copy, Clone)]
 pub struct Vec3 {
@@ -34,9 +36,14 @@ impl Vec3 {
     }
 
     pub fn write(&self, f: &mut File) -> () {
-        let ir = (255.999 * self.x()) as u8;
-        let ig = (255.999 * self.y()) as u8;
-        let ib = (255.999 * self.z()) as u8;
+        let r = self.x();
+        let g = self.y();
+        let b = self.z();
+
+        let intensity = Interval::new(0.0, 0.999);
+        let ir = (256.0 * intensity.clamp(r)) as u8;
+        let ig = (256.0 * intensity.clamp(g)) as u8;
+        let ib = (256.0 * intensity.clamp(b)) as u8;
 
         // let bytes = [ir, ig, ib];
 

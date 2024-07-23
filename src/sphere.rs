@@ -19,7 +19,7 @@ impl Hittable for Sphere {
         let oc = self.center - r.origin();
 
         let a = r.direction().length_squared();
-        let h = vector::dot(r.direction(), &oc);
+        let h = vector::dot(&r.direction(), &oc);
         let c = oc.length_squared() - self.radius.powi(2);
 
         let discriminant = h.powi(2) - a*c;

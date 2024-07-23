@@ -1,20 +1,20 @@
 use crate::vector::{Point3, Vec3};
 
-pub struct Ray<'a> {
-    origin: &'a Point3,
-    direction: &'a Vec3
+pub struct Ray {
+    origin: Point3,
+    direction: Vec3
 }
 
-impl<'a> Ray<'a> {
-    pub fn new(origin: &'a Point3, direction: &'a Vec3) -> Self {
+impl Ray {
+    pub fn new(origin: Point3, direction: Vec3) -> Self {
         Self {origin, direction}
     }
 
-    pub fn direction(&self) -> &'a Vec3 {
+    pub fn direction(&self) -> Vec3 {
         self.direction
     }
 
-    pub fn origin(&self) -> &'a Point3 {
+    pub fn origin(&self) -> Point3 {
         self.origin
     }
 
