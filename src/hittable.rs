@@ -1,5 +1,5 @@
 use crate::material::Material;
-use crate::vector::{self, Color, Point3, Vec3};
+use crate::vector::{self, Point3, Vec3};
 use crate::ray::Ray;
 use crate::interval::Interval;
 

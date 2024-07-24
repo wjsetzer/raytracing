@@ -2,8 +2,6 @@ use std::vec::Vec;
 
 use crate::{hittable::{HitRecord, Hittable}, ray::Ray};
 use crate::interval::Interval;
-use crate::material::Lambertian;
-use crate::vector::Color;
 
 pub struct HittableList {
     objects: Vec<Box<dyn Hittable>>,

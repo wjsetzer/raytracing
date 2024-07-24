@@ -5,7 +5,7 @@ use crate::common::{degrees_to_radians, random_f64, INFINITY};
 use crate::hittable::Hittable;
 use crate::interval::Interval;
 use crate::ray::Ray;
-use crate::vector::{self, cross, random_in_unit_disk, random_on_hemisphere, random_unit_vector, unit_vector, Color, Point3, Vec3};
+use crate::vector::{self, cross, random_in_unit_disk, unit_vector, Color, Point3, Vec3};
 
 pub struct Camera {
     pub aspect_ratio: f64,
