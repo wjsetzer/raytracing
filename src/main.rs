@@ -1,11 +1,7 @@
 use camera::Camera;
-use interval::Interval;
-use ray::Ray;
-use vector::{Color, Point3, unit_vector, Vec3};
-use hittable::Hittable;
+use vector::Point3;
 use hittable_list::HittableList;
 use sphere::Sphere;
-use common::INFINITY;
 
 mod ray;
 mod vector;
@@ -28,8 +24,9 @@ fn main() {
     let aspect_ratio = 16.0 / 9.0;
     let image_width = 400;
     let samples_per_pixel = 100;
+    let max_depth = 10;
 
-    let mut camera = Camera::new(aspect_ratio, image_width, samples_per_pixel);
+    let mut camera = Camera::new(aspect_ratio, image_width, samples_per_pixel, max_depth);
 
     camera.render(world);
 }
