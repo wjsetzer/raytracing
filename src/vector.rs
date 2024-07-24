@@ -36,6 +36,13 @@ impl Vec3 {
         self.e[0].powi(2) + self.e[1].powi(2) + self.e[2].powi(2)
     }
 
+    pub fn near_zero(&self) -> bool {
+        // return true if the vector is close to zero in all dimensions
+        let s = 1e-8;
+
+        self.e[0].abs() < s && self.e[1].abs() < s && self.e[2].abs() < s
+    }
+
     pub fn random() -> Self  {
         Vec3::new(random_f64(), random_f64(), random_f64())
     }
@@ -136,6 +143,14 @@ impl Sub<Vec3> for &Vec3 {
     }
 }
 
+impl Mul<Vec3> for Vec3 {
+    type Output = Self;
+
+    fn mul(self, v: Vec3) -> Self::Output {
+        Self {e: [self.e[0] * v.e[0], self.e[1] * v.e[1], self.e[2] * v.e[2]]}
+    }
+}
+
 impl Mul<f64> for Vec3 {
     type Output = Self;
 
@@ -199,9 +214,6 @@ pub fn random_in_unit_sphere() -> Vec3 {
             return p;
         }
     }
-
-    // this will never return. just for the compiler
-    return Vec3::new(0.0, 0.0, 0.0)
 }
 
 pub fn random_unit_vector() -> Vec3 {
@@ -215,6 +227,10 @@ pub fn random_on_hemisphere(normal: Vec3) -> Vec3 {
     } 
 
     return -on_unit_sphere;
+}
+
+pub fn reflect(v: Vec3, n: Vec3) -> Vec3 {
+    v - 2.0*dot(&v, &n) *n
 }
 
 pub fn linear_to_gamma(linear_component: f64) -> f64 {

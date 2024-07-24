@@ -1,23 +1,34 @@
-use crate::vector::{self, Point3, Vec3};
+use std::rc::Rc;
+
+use crate::material::{Lambertian, Material};
+use crate::vector::{self, Color, Point3, Vec3};
 use crate::ray::Ray;
 use crate::interval::Interval;
 
-#[derive(Copy, Clone)]
-pub struct HitRecord {
+// #[derive(Copy, Clone)]
+pub struct HitRecord<'a> {
     pub p: Point3,
     pub normal: Vec3,
+    pub mat: Option<&'a dyn Material>,
     pub t: f64,
     front_face: bool,
 }
 
-impl HitRecord {
+impl<'a> HitRecord<'a> {
     /*
     pub fn new(p: Point3, normal: Point3, t: f64) -> Self {
         Self { p, normal, t, front_face: false }
     }
     */
     pub fn new() -> Self {
-        Self { p: Point3::new(0.0, 0.0, 0.0), normal: Vec3::new(0.0, 0.0, 0.0), t: 0.0, front_face: false }
+        
+        Self {
+            p: Point3::new(0.0, 0.0, 0.0),
+            normal: Vec3::new(0.0, 0.0, 0.0),
+            mat: None, 
+            t: 0.0,
+            front_face: false
+        }
     }
 
     pub fn set_face_normal(&mut self, r: &Ray, outward_normal: &Vec3) {
@@ -27,6 +38,10 @@ impl HitRecord {
         self.front_face = vector::dot(&r.direction(), &outward_normal) < 0.0;
         self.normal = if self.front_face { *outward_normal } else { -outward_normal }
     }
+
+    // pub fn update_mat(&mut self, mat: &'a dyn Material) {
+    //     self.mat = Box::new(mat);
+    // }
 }
 
 pub trait Hittable {

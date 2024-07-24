@@ -114,9 +114,20 @@ impl Camera {
 
             // return 0.5 * (record.normal + Color::new(1.0, 1.0, 1.0))
             // let direction = random_on_hemisphere(record.normal);
-            let direction = record.normal + random_unit_vector();
+            // let direction = record.normal + random_unit_vector();
             // return 0.5 * Self::ray_color(Ray::new(record.p, direction), world, depth - 1);
-            return 0.1 * Self::ray_color(Ray::new(record.p, direction), world, depth-1);
+            // return 0.5 * Self::ray_color(Ray::new(record.p, direction), world, depth-1);
+
+            if record.mat.is_some() {
+                let maybe_scattered = record.mat.unwrap().scatter(r, &record);
+                if maybe_scattered.is_some() {
+                    let (attenuation, scattered) = maybe_scattered.unwrap();
+
+                    return attenuation * Self::ray_color(scattered, world, depth-1) 
+                }
+
+                return Color::new(0.0, 0.0, 0.0)
+            }
         }
 
 
