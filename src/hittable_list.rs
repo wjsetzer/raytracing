@@ -23,7 +23,6 @@ impl HittableList {
 impl Hittable for HittableList {
     fn hit(&self, r: &Ray, ray_t: Interval) -> Option<HitRecord> {
         // let mut temp_rec: HitRecord = HitRecord::new(Point3::new(0.0, 0.0, 0.0), Vec3::new(0.0, 0.0, 0.0), 0.0);
-        let default_material = Lambertian::new(Color::new(0.0, 0.0, 0.0));
         let mut record: HitRecord = HitRecord::new();
         let mut hit_anything = false;
         let mut closest_so_far = ray_t.max;

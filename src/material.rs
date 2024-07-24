@@ -1,6 +1,6 @@
 use crate::hittable::HitRecord;
 use crate::ray::Ray;
-use crate::vector::{dot, random_unit_vector, reflect, unit_vector, Color};
+use crate::vector::{dot, random_unit_vector, reflect, refract, unit_vector, Color};
 
 // pub enum Materials {
 //     Lambertian(Lambertian),
@@ -58,5 +58,31 @@ impl Material for Metal {
         }
 
         return None;
+    }
+}
+
+pub struct Dielectric {
+    // refractive index in vacuum or air, or the ratio of the material's refractive index over
+    // the refractive index ofthe enclosing medium
+    refraction_index: f64,
+}
+
+impl Dielectric {
+    pub fn new(r: f64) -> Self{
+        Self { refraction_index: r }
+    }
+}
+
+impl Material for Dielectric {
+    fn scatter(&self, r_in: Ray, record: &HitRecord) -> Option<(Color, Ray)> {
+        let attenuation = Color::new(1.0, 1.0, 1.0);
+        let ri = if record.front_face { 1.0 / self.refraction_index } else { self.refraction_index };
+
+        let unit_direction = unit_vector(r_in.direction());
+        let refracted = refract(unit_direction, record.normal, ri);
+
+        let scattered = Ray::new(record.p, refracted);
+        
+        return Some((attenuation, scattered));
     }
 }

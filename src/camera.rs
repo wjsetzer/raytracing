@@ -65,7 +65,7 @@ impl Camera {
                 // let color = Self::ray_color(r, &world);
 
                 let mut color = Color::new(0.0, 0.0, 0.0);
-                for sample in 0..self.samples_per_pixel {
+                for _ in 0..self.samples_per_pixel {
                     let r = self.get_ray(width, height);
                     color = color + Self::ray_color(r, &world, self.max_depth);
                 }

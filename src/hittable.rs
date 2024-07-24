@@ -1,6 +1,4 @@
-use std::rc::Rc;
-
-use crate::material::{Lambertian, Material};
+use crate::material::Material;
 use crate::vector::{self, Color, Point3, Vec3};
 use crate::ray::Ray;
 use crate::interval::Interval;
@@ -11,7 +9,7 @@ pub struct HitRecord<'a> {
     pub normal: Vec3,
     pub mat: Option<&'a dyn Material>,
     pub t: f64,
-    front_face: bool,
+    pub front_face: bool,
 }
 
 impl<'a> HitRecord<'a> {
