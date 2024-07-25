@@ -6,6 +6,7 @@ use crate::hittable::Hittable;
 use crate::interval::Interval;
 use crate::ray::Ray;
 use crate::vector::{self, cross, random_in_unit_disk, unit_vector, Color, Point3, Vec3};
+use chrono;
 
 pub struct Camera {
     pub aspect_ratio: f64,
@@ -69,7 +70,9 @@ impl Camera {
         self.initialize();
 
         // let mut stdout = std::io::stdout();
-        let mut file = File::create("test.ppm").expect("Could not create file.");
+        let datetime = chrono::Local::now().format("%Y-%m-%d_%H-%M");
+        let filename = format!("test-{}.ppm", datetime);
+        let mut file = File::create(filename).expect("Could not create file.");
 
         let header = std::format!("P6\n{} {}\n255\n", self.image_width, self.image_height);
 
